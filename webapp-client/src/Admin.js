@@ -65,8 +65,7 @@ const myDataProvider = {
         // );
         let formData = new FormData()
         formData.append('file', params.data.img.rawFile);
-        return axios.post("http://localhost:3000/test", formData).then(res=>console.log("PPPPPPP", res))
-        
+        return axios.post("http://localhost:3000/test", formData)
         // return dataProvider.create(resource, {
         //     ...params,
         //     data:{
