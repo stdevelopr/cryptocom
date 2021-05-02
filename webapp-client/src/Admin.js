@@ -1,5 +1,5 @@
 import React from 'react'
-import { Admin, Resource, NumberField, NumberInput, EditGuesser, ImageInput, ReferenceInput, ImageField, SelectInput, List, Datagrid, Edit, Create, SimpleForm, DateField, TextField, EditButton, TextInput, DateInput } from 'react-admin';
+import { Admin, Resource, NumberField, NumberInput, EditGuesser, ImageInput, ReferenceInput, Labeled, FormDataConsumer, ImageField, SelectInput, List, Datagrid, Edit, Create, SimpleForm, DateField, TextField, EditButton, TextInput, DateInput } from 'react-admin';
 import restProvider from "ra-data-simple-rest"
 import axios from 'axios';
 
@@ -15,6 +15,14 @@ export const ProductList = props => (
     </List>
 );
 
+function formatLogo(value) {
+    if (!value ||  typeof value === "string") { // Value is null or the url string from the backend, wrap it in an object so the form input can handle it 
+     return { url: value };
+    } else {  // Else a new image is selected which results in a value object already having a preview link under the url key
+      return value;
+    }
+  }
+
 export const ProductEdit = props => (
     <Edit {...props}>
         <SimpleForm>
@@ -22,6 +30,10 @@ export const ProductEdit = props => (
             <TextInput source="title" />
             <TextInput source="description" />
             <NumberInput source="price" />
+            <ImageInput format={ formatLogo } source="img" label="Billede" accept="image/*" mulitple={false}>
+                <ImageField source="url" title="title" />
+            </ImageInput>
+  
         </SimpleForm>
     </Edit>
 );
@@ -34,7 +46,7 @@ export const ProductCreate = props => (
             <TextInput source="description" />
             <NumberInput source="price" />
             <ImageInput source="img" label="Related pictures" accept="image/*">
-            <ImageField source="src" title="title" />
+                <ImageField source="src" title="title" />
 
             </ImageInput>
         </SimpleForm>
@@ -45,24 +57,11 @@ const dataProvider = restProvider('http://localhost:3000')
 const myDataProvider = {
     ...dataProvider,
     create: (resource, params) => {
-        console.log("OOOOOPPPPPPPPP", params)
         if (resource !== 'products' || !params.data.img) {
-            console.log("HEreeee")
             // fallback to the default implementation
-            // return dataProvider.create(resource, params);
+            return dataProvider.create(resource, params);
         }
-        /**
-         * For posts update only, convert uploaded image in base 64 and attach it to
-         * the `picture` sent property, with `src` and `title` attributes.
-         */
-        
-        // Freshly dropped pictures are File objects and must be converted to base64 strings
-        // const newPictures = params.data.pictures.filter(
-        //     p => p.rawFile instanceof File
-        // );
-        // const formerPictures = params.data.pictures.filter(
-        //     p => !(p.rawFile instanceof File)
-        // );
+
         let formData = new FormData()
         formData.append('file', params.data.img.rawFile);
         return axios.post("http://localhost:3000/test", formData)
