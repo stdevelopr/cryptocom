@@ -64,7 +64,21 @@ const myDataProvider = {
 
         let formData = new FormData()
         formData.append('file', params.data.img.rawFile);
-        return axios.post("http://localhost:3000/test", formData)
+        formData.append('data', JSON.stringify(params));
+        console.log("PPPPPPPPPPP", params, formData)
+        const pet = {
+            formData: formData,
+            params: params
+        }
+
+        const config = {
+            headers: {
+                'Accept': 'application/json',
+                'content-type': 'multipart/form-data'
+            }
+        }
+        // return dataProvider.create(resource, params);
+        return axios.post("http://localhost:3000/products", formData, config)
         // return dataProvider.create(resource, {
         //     ...params,
         //     data:{
