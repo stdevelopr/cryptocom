@@ -1,19 +1,20 @@
-from sanic import Sanic, response
-from sanic.response import json, text, file
+from sanic import Sanic
 from sanic_restful_api import reqparse, abort, Api, Resource
 from minio import Minio
 from io import BytesIO
-from databases import Database
-from marshmallow import Schema, fields
 import json as pjson
+from sqlalchemy.ext.asyncio import create_async_engine
+from resources.products import Product, ProductsList
 
+from contextvars import ContextVar 
 
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import sessionmaker
+
+_base_model_session_ctx = ContextVar("session")
 
 app = Sanic("sanic-api")
 api = Api(app)
-
-parser = reqparse.RequestParser()
-parser.add_argument('title', 'description')
 
 client = Minio(
     "minio:9000",
@@ -22,63 +23,20 @@ client = Minio(
     secure=False
 )
 
-database = Database('postgresql://postgres:ccom@postgres-db:5432/ccom')
-app.db = database
-products = [
-    {'id': '1', 'title': 'product1', 'description': 'joia1', 'price': 'R$5', 'img': 'http://localhost:9000/my-bucket/portfolio_2020_min.png'},
-    {'id': '2', 'title': 'product2', 'description': 'joia2', 'price': 'R$100', 'img': 'http://localhost:9000/my-bucket/portfolio_2020_min.png'}
-]
-
-class ProductSchema(Schema):
-    id = fields.Str()
-    title = fields.Str()
-    description = fields.Str()
-    price = fields.Number()
-    img = fields.Str()
+bind = create_async_engine("postgresql+asyncpg://postgres:ccom@postgres-db:5432/ccom", echo=True)
 
 
+@app.middleware("request")
+async def inject_session(request):
+    request.ctx.session = sessionmaker(bind, AsyncSession, expire_on_commit=False)()
+    request.ctx.session_ctx_token = _base_model_session_ctx.set(request.ctx.session)
 
-@app.listener('after_server_start')    
-async def connect_to_db(*args, **kwargs):        
-    await app.db.connect()
 
-class Product(Resource):
-    async def get(self, request, product_id):
-        return products[0]
-
-    async def delete(self, request, todo_id):
-        pass
-
-    async def put(self, request, todo_id):
-        pass
-
-class ProductsList(Resource):
-    async def get(self, request): 
-        query = f"SELECT * from products"
-        products = await app.db.fetch_all(query=query)
-        schema = ProductSchema(many=True)
-        result = schema.dump(products)
-        return response.json(
-        result,
-        headers={'Content-Range': 'products 0-24/319'},
-        status=200)
-
-    async def post(self, request):
-        img_file = request.files['file'][0]
-        data = pjson.loads(request.form['data'][0])['data']
-
-        output = BytesIO()
-        output.write(img_file.body)
-        output.seek(0)
-        client.put_object('my-bucket', img_file.name, output, length=len(img_file.body))
-        title = data['title']
-        description = data['description']
-        price = data['price']
-        img = f'http://localhost:9000/my-bucket/{img_file.name}'
-        query = f"INSERT INTO products(title, description, price, img) VALUES ('{title}', '{description}', '{price}', '{img}')"
-        resp = await app.db.execute(query=query)
-        return response.json({"msg":"success"})
-
+@app.middleware("response")
+async def close_session(request, response):
+    if hasattr(request.ctx, "session_ctx_token"):
+        _base_model_session_ctx.reset(request.ctx.session_ctx_token)
+        await request.ctx.session.close()
 
 api.add_resource(ProductsList, '/products')
 api.add_resource(Product, '/products/<product_id>')
