@@ -65,7 +65,6 @@ const myDataProvider = {
         let formData = new FormData()
         formData.append('file', params.data.img.rawFile);
         formData.append('data', JSON.stringify(params));
-        console.log("PPPPPPPPPPP", params, formData)
         const pet = {
             formData: formData,
             params: params

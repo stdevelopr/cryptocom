@@ -2,7 +2,17 @@ from sanic_restful_api import reqparse, abort, Api, Resource
 from models import ProductModel, ProductSchema
 from sanic import Sanic, response
 from sanic.response import json, text, file
-from sqlalchemy import select
+from sqlalchemy import select, delete, update
+from io import BytesIO
+from minio import Minio
+import json
+
+client = Minio(
+    "minio:9000",
+    access_key="minio",
+    secret_key="minioadmin",
+    secure=False
+)
 
 class Product(Resource):
     async def get(self, request, product_id):
@@ -13,11 +23,21 @@ class Product(Resource):
             product = result.scalar()
         return product.to_dict()
 
-    async def delete(self, request, todo_id):
-        pass
+    async def delete(self, request, product_id):
+        session = request.ctx.session
+        async with session.begin():
+            stmt = delete(ProductModel).where(ProductModel.id == int(product_id))
+            result = await session.execute(stmt)
 
-    async def put(self, request, todo_id):
-        pass
+    async def put(self, request, product_id):
+        session = request.ctx.session
+        async with session.begin():
+            data = json.loads(request.body)
+            res = update(ProductModel).where(ProductModel.id == int(product_id)).values(data)
+            result = await session.execute(res)
+            schema = ProductSchema()
+            
+            return response.json(data, status=200)
 
 class ProductsList(Resource):
     async def get(self, request): 
@@ -35,7 +55,7 @@ class ProductsList(Resource):
     async def post(self, request):
         session = request.ctx.session
         img_file = request.files['file'][0]
-        data = pjson.loads(request.form['data'][0])['data']
+        data = json.loads(request.form['data'][0])['data']
 
         output = BytesIO()
         output.write(img_file.body)

@@ -1,8 +1,5 @@
 from sanic import Sanic
 from sanic_restful_api import reqparse, abort, Api, Resource
-from minio import Minio
-from io import BytesIO
-import json as pjson
 from sqlalchemy.ext.asyncio import create_async_engine
 from resources.products import Product, ProductsList
 
@@ -15,13 +12,6 @@ _base_model_session_ctx = ContextVar("session")
 
 app = Sanic("sanic-api")
 api = Api(app)
-
-client = Minio(
-    "minio:9000",
-    access_key="minio",
-    secret_key="minioadmin",
-    secure=False
-)
 
 bind = create_async_engine("postgresql+asyncpg://postgres:ccom@postgres-db:5432/ccom", echo=True)
 

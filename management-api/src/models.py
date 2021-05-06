@@ -17,7 +17,7 @@ class ProductModel(BaseModel):
     img = Column(String())
 
     def to_dict(self):
-        return {"id": self.id, "title": self.title, "description": self.description, "img": self.img}
+        return {"id": self.id, "title": self.title, "description": self.description, "price": self.price, "img": self.img}
 
 class ProductSchema(Schema):
     id = fields.Str()
