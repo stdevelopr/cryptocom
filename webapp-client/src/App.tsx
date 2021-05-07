@@ -2,6 +2,8 @@ import { useState } from "react"
 import { useQuery } from "react-query"
 import Item from "./Item/Item"
 import Cart from "./Cart/Cart"
+import Header from "./Header/Header"
+import Footer from "./Footer/Footer"
 import { Wrapper, StyledButton } from "./App.styles"
 import Drawer from "@material-ui/core/Drawer"
 import LinearProgress from "@material-ui/core/LinearProgress"
@@ -61,6 +63,7 @@ function App() {
   if (error) return <div>Something went wrong...</div>
   return (
     <div className="App">
+      <Header/>
       <Wrapper>
         <Drawer anchor='right' open={cartOpen} onClose={() => setCartOpen(false)}>
           <Cart cartItems={cartItems} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} />
@@ -77,6 +80,7 @@ function App() {
             </Grid>
           ))}
         </Grid>
+        <Footer/>
       </Wrapper>
     </div>
   );
