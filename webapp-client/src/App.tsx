@@ -10,6 +10,11 @@ import LinearProgress from "@material-ui/core/LinearProgress"
 import Grid from "@material-ui/core/Grid"
 import AddShoppingCartIcon from "@material-ui/icons/ShoppingCart"
 import Badge from "@material-ui/core/Badge"
+import DataView from "./components/DataView/DataView"
+import 'primeicons/primeicons.css';
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.css';
+import 'primeflex/primeflex.css';
 // import { AddShoppingCartIcon } from "@material-ui/icons"
 
 //Types
@@ -73,13 +78,14 @@ function App() {
             <AddShoppingCartIcon />
           </Badge>
         </StyledButton>
-        <Grid container spacing={3}>
+        <DataView data={data}/>
+        {/* <Grid container spacing={3}>
           {data?.map(item => (
             <Grid item key={item.id} xs={12} sm={4}>
               <Item item={item} handleAddToCart={handleAddToCart} />
             </Grid>
           ))}
-        </Grid>
+        </Grid> */}
         <Footer/>
       </Wrapper>
     </div>
