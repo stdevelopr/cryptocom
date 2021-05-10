@@ -6,9 +6,11 @@ import { Dropdown } from 'primereact/dropdown';
 // import ProductService from '../service/ProductService';
 import { Rating } from 'primereact/rating';
 import { Wrapper } from "./DataView.styles"
+import Item from "../../Item/Item"
+import { ItemStyle1 } from "./Layouts/Item/ItemStyle1/ItemStyle1"
 
 
-const DataViewComponent = ({ data }) => {
+const DataViewComponent = ({ data, handleAddToCart }) => {
     const [products, setProducts] = useState(data);
     const [layout, setLayout] = useState('grid');
     const [sortKey, setSortKey] = useState(null);
@@ -63,26 +65,8 @@ const DataViewComponent = ({ data }) => {
 
     const renderGridItem = (data) => {
         return (
-            <div className="p-col-12 p-md-4">
-                <div className="product-grid-item card">
-                    <div className="product-grid-item-top">
-                        <div>
-                            <i className="pi pi-tag product-category-icon"></i>
-                            <span className="product-category">{"categoria"}</span>
-                        </div>
-                        <span className="product-badge status-instock">instock</span>
-                    </div>
-                    <div className="product-grid-item-content">
-                        <img src={data.img} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={data.name} />
-                        <div className="product-name">{data.title}</div>
-                        <div className="product-description">{data.description}</div>
-                        {/* <Rating value={data.rating} readOnly cancel={false}></Rating> */}
-                    </div>
-                    <div className="product-grid-item-bottom">
-                        <span className="product-price">${data.price}</span>
-                        <Button icon="pi pi-shopping-cart" label="Add to Cart" disabled={false}></Button>
-                    </div>
-                </div>
+            <div className="p-col-12 p-md-3 item-container">
+                <ItemStyle1 data={data} handleAddToCart={handleAddToCart}/>
             </div>
         );
     }

@@ -6,6 +6,7 @@ import Admin from './Admin.js'
 import { QueryClient, QueryClientProvider } from "react-query"
 
 const client = new QueryClient();
+document.querySelector('body')!.style.margin = '0px'
 
 ReactDOM.render(
   <QueryClientProvider client={client}>

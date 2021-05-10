@@ -14,8 +14,11 @@ export const Wrapper = styled.div`
     }
 
     img {
-        max-height: 250px;
-        object-fit: cover;
+        /* height: 250px;
+        object-fit: cover; */
+        width: auto;
+        max-height: 200px;
+        /* max-width: 200px; */
         border-radius: 20px 20px 0 0;
     }
 
@@ -24,4 +27,8 @@ export const Wrapper = styled.div`
         padding: 1rem;
         height: 100%;
     }
+
+    /* .content {
+        height: 20%;
+    } */
 `

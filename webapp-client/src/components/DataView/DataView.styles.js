@@ -1,8 +1,10 @@
 import styled from "styled-components"
 export const Wrapper = styled.div`
-.test {
-    color: red;
+.dataview-demo .item-container {
+    padding: .4rem; 
+    text-align: center;
 }
+
 .dataview-demo .p-dropdown {
     width: 14rem;
     font-weight: normal;
@@ -65,9 +67,18 @@ export const Wrapper = styled.div`
 }
 
 .dataview-demo .product-grid-item {
-    margin: .5em;
+    height: 100%;
+    /* margin: .5em; */
+    /* border: 1px solid #dee2e6; */
+    /* padding: 1rem; */
+    padding: .4em;
+}
+
+.dataview-demo .product-grid-item .card {
+    height: 100%;
+    /* margin: .5em; */
     border: 1px solid #dee2e6;
-    padding: 2rem;
+    padding: 1rem;
 }
 
 .dataview-demo .product-grid-item .product-grid-item-top,
@@ -76,6 +87,13 @@ export const Wrapper = styled.div`
     align-items: center;
     justify-content: space-between;
 }
+
+/* .dataview-demo .product-grid-item .img-container {
+    width: 75%;
+    height: 80%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    margin: 2rem 0;
+} */
 
 .dataview-demo .product-grid-item img {
     width: 75%;

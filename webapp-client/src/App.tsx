@@ -38,7 +38,7 @@ function App() {
   const { data, isLoading, error } = useQuery<CartItemType[]>('products', getProducts)
 
   const getTotalItems = (items: CartItemType[]) => items.reduce((ack: number, item) => ack + item.amount, 0)
-  const handleAddToCart = (clickedItem: CartItemType) => {
+  const handleAddToCart:any = (clickedItem: CartItemType) => {
     setCartItems(prev => {
       const isItemInCart = prev.find(item => item.id == clickedItem.id)
       if (isItemInCart) {
@@ -78,7 +78,7 @@ function App() {
             <AddShoppingCartIcon />
           </Badge>
         </StyledButton>
-        <DataView data={data}/>
+        <DataView data={data} handleAddToCart={handleAddToCart}/>
         {/* <Grid container spacing={3}>
           {data?.map(item => (
             <Grid item key={item.id} xs={12} sm={4}>

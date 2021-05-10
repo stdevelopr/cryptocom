@@ -5,7 +5,7 @@ function Header() {
     return (
         <Wrapper>
             <div>
-                Nome da loja
+                Joias
             </div>
         </Wrapper>
     )
