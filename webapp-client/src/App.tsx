@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useQuery } from "react-query"
 import Item from "./Item/Item"
-import Cart from "./Cart/Cart"
+import Cart from "./Cart/Cart.js"
 import Header from "./Header/Header"
 import Footer from "./Footer/Footer"
 import { Wrapper, StyledButton } from "./App.styles"
@@ -38,6 +38,7 @@ function App() {
   const { data, isLoading, error } = useQuery<CartItemType[]>('products', getProducts)
 
   const getTotalItems = (items: CartItemType[]) => items.reduce((ack: number, item) => ack + item.amount, 0)
+
   const handleAddToCart:any = (clickedItem: CartItemType) => {
     setCartItems(prev => {
       const isItemInCart = prev.find(item => item.id == clickedItem.id)

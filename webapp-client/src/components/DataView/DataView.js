@@ -8,6 +8,7 @@ import { Rating } from 'primereact/rating';
 import { Wrapper } from "./DataView.styles"
 import Item from "../../Item/Item"
 import { ItemStyle1 } from "./Layouts/Item/ItemStyle1/ItemStyle1"
+import { Carousel } from 'primereact/carousel';
 
 
 const DataViewComponent = ({ data, handleAddToCart }) => {
@@ -65,7 +66,7 @@ const DataViewComponent = ({ data, handleAddToCart }) => {
 
     const renderGridItem = (data) => {
         return (
-            <div className="p-col-12 p-md-3 item-container">
+            <div className="p-col-12 p-sm-6 p-md-4 p-lg-3 p-xl-2 item-container">
                 <ItemStyle1 data={data} handleAddToCart={handleAddToCart}/>
             </div>
         );
@@ -86,7 +87,7 @@ const DataViewComponent = ({ data, handleAddToCart }) => {
         return (
             <div className="p-grid p-nogutter">
                 <div className="p-col-6" style={{ textAlign: 'left' }}>
-                    <Dropdown options={sortOptions} value={sortKey} optionLabel="label" placeholder="Sort By Price" onChange={onSortChange} />
+                    {/* <Dropdown options={sortOptions} value={sortKey} optionLabel="label" placeholder="Sort By Price" onChange={onSortChange} /> */}
                 </div>
                 <div className="p-col-6" style={{ textAlign: 'right' }}>
                     <DataViewLayoutOptions layout={layout} onChange={(e) => setLayout(e.value)} />
@@ -97,9 +98,52 @@ const DataViewComponent = ({ data, handleAddToCart }) => {
 
     const header = renderHeader();
 
+    const productTemplate = (product) => {
+        return (
+            <div className="product-item">
+                <div className="product-item-content">
+                    <div className="p-mb-2">
+                        <img src={product.img} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={product.name} className="product-image" />
+                    </div>
+                    <div>
+                        <h4 className="p-mb-1">{product.title}</h4>
+                        <h6 className="p-mt-0 p-mb-3">R${product.price}</h6>
+                        {/* <div className="car-buttons p-mt-5">
+                            <Button icon="pi pi-search" className="p-button p-button-rounded p-mr-2" />
+                            <Button icon="pi pi-star" className="p-button-success p-button-rounded p-mr-2" />
+                            <Button icon="pi pi-cog" className="p-button-help p-button-rounded" />
+                        </div> */}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    const responsiveOptions = [
+        {
+            breakpoint: '1024px',
+            numVisible: 3,
+            numScroll: 3
+        },
+        {
+            breakpoint: '600px',
+            numVisible: 2,
+            numScroll: 2
+        },
+        {
+            breakpoint: '480px',
+            numVisible: 1,
+            numScroll: 1
+        }
+    ];
+
     return (
         <Wrapper>
             <div className="dataview-demo">
+                {/* <div className="carousel">
+                <Carousel value={products} numVisible={3} numScroll={3} responsiveOptions={responsiveOptions}
+                    itemTemplate={productTemplate}/>
+                </div> */}
                 <div className="card">
                     <DataView value={products} layout={layout} header={header}
                         itemTemplate={itemTemplate} paginator rows={9}

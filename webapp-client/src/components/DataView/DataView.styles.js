@@ -110,6 +110,20 @@ export const Wrapper = styled.div`
     font-weight: 600;
 }
 
+
+.dataview-demo .carousel .product-item .product-item-content {
+    /* border: 1px solid var(--surface-d); */
+    border-radius: 3px;
+    margin: .3rem;
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.dataview-demo .carousel .product-item .product-image {
+    width: 50%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
 @media screen and (max-width: 576px) {
     .dataview-demo .product-list-item {
         flex-direction: column;
