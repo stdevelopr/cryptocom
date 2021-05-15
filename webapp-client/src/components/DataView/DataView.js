@@ -9,6 +9,7 @@ import { Wrapper } from "./DataView.styles"
 import Item from "../../Item/Item"
 import { ItemStyle1 } from "./Layouts/Item/ItemStyle1/ItemStyle1"
 import { Carousel } from 'primereact/carousel';
+// import Button from "@material-ui/core/Button"
 
 
 const DataViewComponent = ({ data, handleAddToCart }) => {
@@ -52,11 +53,11 @@ const DataViewComponent = ({ data, handleAddToCart }) => {
                         <div className="product-name">{data.title}</div>
                         <div className="product-description">{data.description}</div>
                         {/* <Rating value={data.rating} readOnly cancel={false}></Rating> */}
-                        <i className="pi pi-tag product-category-icon"></i><span className="product-category">{"OK"}</span>
+                        {/* <i className="pi pi-tag product-category-icon"></i><span className="product-category">{"OK"}</span> */}
                     </div>
                     <div className="product-list-action">
-                        <span className="product-price">${data.price}</span>
-                        <Button icon="pi pi-shopping-cart" label="Add to Cart" disabled={false}></Button>
+                        <span className="product-price">R${data.price}</span>
+                        <Button icon="pi pi-shopping-cart" className="p-button-secondary" label="Comprar" disabled={false} onClick={()=>handleAddToCart(data)}></Button>
                         {/* <span className={`product-badge status-${data.inventoryStatus.toLowerCase()}`}>{data.inventoryStatus}</span> */}
                     </div>
                 </div>

@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
     justify-content: space-between;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 30px;
-    background-color: #f7f7f7;
+    /* background-color: #f7f7f7; */
     color: darkgoldenrod;
     font-variant: petite-caps;
 

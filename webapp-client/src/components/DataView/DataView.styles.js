@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
 }
 
 .dataview-demo .product-name {
-    font-size: 1.5rem;
+    /* font-size: 1.5rem; */
     font-weight: 700;
 }
 
@@ -51,7 +51,7 @@ export const Wrapper = styled.div`
 }
 
 .dataview-demo .product-list-item .product-price {
-    font-size: 1.5rem;
+    /* font-size: 1.5rem; */
     font-weight: 600;
     margin-bottom: .5rem;
     align-self: flex-end;
@@ -122,6 +122,13 @@ export const Wrapper = styled.div`
 .dataview-demo .carousel .product-item .product-image {
     width: 50%;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.p-dataview-layout-options .p-highlight{
+    background: #607D8B;
+    :hover{
+        background: #607D8B;
+    }
 }
 
 @media screen and (max-width: 576px) {
