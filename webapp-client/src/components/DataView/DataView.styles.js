@@ -1,5 +1,9 @@
 import styled from "styled-components"
 export const Wrapper = styled.div`
+
+.p-button-secondary {
+    background-color: #309696;
+}
 .dataview-demo .item-container {
     padding: .4rem; 
     text-align: center;
@@ -125,9 +129,9 @@ export const Wrapper = styled.div`
 }
 
 .p-dataview-layout-options .p-highlight{
-    background: #607D8B;
+    background: #963030;
     :hover{
-        background: #607D8B;
+        background: #BD3C3C;
     }
 }
 

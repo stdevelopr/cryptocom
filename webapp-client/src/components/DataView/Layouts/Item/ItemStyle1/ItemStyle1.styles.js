@@ -47,6 +47,10 @@ img {
 }
 
 button {
+    border-radius: 0px 0px 20px 20px;
     width: 100%;
+    :hover {
+        background-color: #30969638
+    }
 }
 `
