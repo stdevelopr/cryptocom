@@ -29,7 +29,7 @@ export type CartItemType = {
 }
 
 const getProducts = async (): Promise<CartItemType[]> => {
-  return await (await fetch('http://172.17.0.1:8000/products')).json()
+  return await (await fetch('/api/products')).json()
 }
 
 function App() {

@@ -9,7 +9,7 @@ function Header() {
         <Wrapper>
             <div className="logo-container">
                 <div className="logo-img">
-                <ReactRoundedImage image={"generated.jpg"} imageHeight="150" imageWidth="150" roundedColor="darkgoldenrod" roundedSize="8" borderRadius="100" style={{zIndex: 10}}/>
+                <ReactRoundedImage image={"generated.jpg"} imageHeight="150" imageWidth="150" roundedColor="darkgoldenrod" roundedSize="8" borderRadius="100"/>
                 </div>
                 <div className="title" style={{margin: '-5px'}}> L&A Comércio de Jóias </div>
             </div>
