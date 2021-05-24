@@ -1,12 +1,13 @@
 version: "3.9"
 services:
     webapp-client:
-        container_name: webapp-client-prod
-        build: 
-          context: ./webapp-client
-          dockerfile: Dockerfile.production
-        ports: 
+      container_name: webapp-client-prod
+      build: ./nginx
+      volumes:
+            - ./nginx/build:/usr/share/nginx/html
+      ports: 
             - 80:80
+
     management-api:
         container_name: management-api
         build: ./management-api
