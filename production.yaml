@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+    webapp-client:
+        container_name: webapp-client-prod
+        build: 
+          context: ./webapp-client
+          dockerfile: Dockerfile.production
+        ports: 
+            - 80:80
+    management-api:
+        container_name: management-api
+        build: ./management-api
+        environment:
+            - SANIC_NO_UJSON=true
+            - SANIC_NO_UVLOOP=true
+        volumes: 
+            - ./management-api/src:/usr/src/app
+        ports: 
+            - 8000:8000
+    minio:
+        container_name: minio
+        image: minio/minio
+        environment:
+            - MINIO_ROOT_USER=minio
+            - MINIO_ROOT_PASSWORD=minioadmin
+        volumes:
+            - ./storage:/data
+        ports:
+            - "9000:9000"
+        command: server /data
+    postgres-db:
+        container_name: postgres-db
+        build: ./postgres-db
+        environment:
+            - POSTGRES_PASSWORD=ccom
+            - POSTGRES_DB=ccom
+            - BITNAMI_DEBUG=true
+        ports:
+            - "5432:5432"
