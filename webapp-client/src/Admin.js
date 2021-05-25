@@ -77,7 +77,7 @@ const myDataProvider = {
             }
         }
         // return dataProvider.create(resource, params);
-        return axios.post("http://localhost:3000/products", formData, config)
+        return axios.post("api/products", formData, config)
         // return dataProvider.create(resource, {
         //     ...params,
         //     data:{
@@ -114,7 +114,6 @@ const myDataProvider = {
  */
 const convertFileToBase64 = file =>
     new Promise((resolve, reject) => {
-        console.log("FILLEEE", file)
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result);
         reader.onerror = reject;
