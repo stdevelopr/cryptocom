@@ -6,7 +6,7 @@ function Checkout() {
     const { items, setItems } = useContext(shopContext)
     const list = [{
         amount: 1,
-        description: "Descrição7",
+        description: "Descrição77",
         id: "41",
         img: "http://localhost:9000/my-bucket/joia.jpg",
         price: 199,

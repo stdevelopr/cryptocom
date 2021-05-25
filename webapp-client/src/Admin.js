@@ -53,7 +53,7 @@ export const ProductCreate = props => (
     </Create>
 );
 
-const dataProvider = restProvider('http://localhost:3000')
+const dataProvider = restProvider('http://localhost:3000/api')
 const myDataProvider = {
     ...dataProvider,
     create: (resource, params) => {

@@ -20,10 +20,10 @@ ReactDOM.render(
             <Route exact path="/checkout">
               <Checkout />
             </Route>
-          </ShopContext>
-          <Route exact path="/admin">
+            <Route exact path="/admin">
             <Admin />
           </Route>
+          </ShopContext>
         </Switch>
       </BrowserRouter>
   </QueryClientProvider>
