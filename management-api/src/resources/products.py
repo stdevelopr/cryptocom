@@ -64,7 +64,7 @@ class ProductsList(Resource):
         title = data['title']
         description = data['description']
         price = data['price']
-        img = f'http://minio:9000/my-bucket/{img_file.name}'
+        img = f'/my-bucket/{img_file.name}'
         async with session.begin():
             product = ProductModel(title= title, description=description, price=price, img=img)
             session.add(product)
