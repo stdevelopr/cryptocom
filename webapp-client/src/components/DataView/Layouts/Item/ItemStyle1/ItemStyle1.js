@@ -1,7 +1,9 @@
 import React from 'react'
 import { Wrapper } from './ItemStyle1.styles'
 import Button from "@material-ui/core/Button"
-export const ItemStyle1 = ({ data, handleAddToCart }) => {
+import config from 'react-global-configuration';
+
+export const ItemStyle1 = ({ data, handleAddToCart, viewOnly }) => {
     return (
         <Wrapper>
             <div className="item">
@@ -9,7 +11,7 @@ export const ItemStyle1 = ({ data, handleAddToCart }) => {
                 <div className="images">
                     <div className="img-container">
                         <picture>
-                            <img src={data.img} />
+                            <img src={`${config.get('storage') || ''}${data.img}`} />
                         </picture>
                     </div>
                 </div>
@@ -18,7 +20,9 @@ export const ItemStyle1 = ({ data, handleAddToCart }) => {
                     <p className="description">{data.description}</p>
                     <p className="price">R$ {data.price}</p>
                 </div>
-                <Button onClick={()=>handleAddToCart(data)}>Comprar</Button>
+                {!viewOnly &&
+                    <Button onClick={() => handleAddToCart(data)}>Comprar</Button>
+                }
             </div>
         </Wrapper>
     )

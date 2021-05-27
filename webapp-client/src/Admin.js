@@ -2,24 +2,32 @@ import React from 'react'
 import { Admin, Resource, NumberField, NumberInput, EditGuesser, ImageInput, ReferenceInput, Labeled, FormDataConsumer, ImageField, SelectInput, List, Datagrid, Edit, Create, SimpleForm, DateField, TextField, EditButton, TextInput, DateInput } from 'react-admin';
 import restProvider from "ra-data-simple-rest"
 import axios from 'axios';
+import config from 'react-global-configuration';
 
-export const ProductList = props => (
-    <List {...props}>
-        <Datagrid rowClick="edit">
-            <TextField source="id" />
-            <TextField source="title" />
-            <TextField source="description" />
-            <NumberField source="price" />
-            <ImageField source="img" title="Image" />
-        </Datagrid>
-    </List>
-);
+export const ProductList = props => {
+    return <List {...props}>
+    <Datagrid rowClick="edit">
+        <TextField source="id" />
+        <TextField source="title" />
+        <TextField source="description" />
+        <NumberField source="price" />
+        <ImageEnv source="title" title="Image" />
+    </Datagrid>
+</List>
+}
+;
 
+const ImageEnv = props => {
+    props.record['env'] = `${config.get('storage') || ''}${props.record.img}`
+    return (
+        <ImageField source='env' title={props.title} />
+    )
+}
 function formatLogo(value) {
     if (!value ||  typeof value === "string") { // Value is null or the url string from the backend, wrap it in an object so the form input can handle it 
-     return { url: value };
+     return { url: `${config.get('storage') || ''}${value}` };
     } else {  // Else a new image is selected which results in a value object already having a preview link under the url key
-      return value;
+      return `${config.get('storage') || ''}${value}`;
     }
   }
 

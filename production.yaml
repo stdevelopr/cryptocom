@@ -2,12 +2,14 @@ version: "3.9"
 services:
     nginx:
       container_name: nginx
+      environment:
+            - REACT_APP_STORAGE=http://localhost:9000
       build: ./nginx
       volumes:
             - ./nginx/build:/usr/share/nginx/html
             - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       ports: 
-            - 80:80
+            - 8080:80
 
     management-api:
         container_name: management-api

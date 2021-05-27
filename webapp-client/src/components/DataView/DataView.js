@@ -8,11 +8,12 @@ import { Rating } from 'primereact/rating';
 import { Wrapper } from "./DataView.styles"
 import Item from "../../Item/Item"
 import { ItemStyle1 } from "./Layouts/Item/ItemStyle1/ItemStyle1"
+import config from 'react-global-configuration';
 import { Carousel } from 'primereact/carousel';
 // import Button from "@material-ui/core/Button"
 
 
-const DataViewComponent = ({ data, handleAddToCart }) => {
+const DataViewComponent = ({ data, handleAddToCart, viewOnly }) => {
     const [products, setProducts] = useState(data);
     const [layout, setLayout] = useState('grid');
     const [sortKey, setSortKey] = useState(null);
@@ -48,18 +49,20 @@ const DataViewComponent = ({ data, handleAddToCart }) => {
         return (
             <div className="p-col-12">
                 <div className="product-list-item">
-                    <img src={data.img} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={data.name} />
+                    <img src={`${config.get('storage') || ''}${data.img}`} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={data.name} />
                     <div className="product-list-detail">
                         <div className="product-name">{data.title}</div>
                         <div className="product-description">{data.description}</div>
                         {/* <Rating value={data.rating} readOnly cancel={false}></Rating> */}
                         {/* <i className="pi pi-tag product-category-icon"></i><span className="product-category">{"OK"}</span> */}
                     </div>
-                    <div className="product-list-action">
-                        <span className="product-price">R${data.price}</span>
-                        <Button icon="pi pi-shopping-cart" className="p-button-secondary" label="Comprar" disabled={false} onClick={()=>handleAddToCart(data)}></Button>
-                        {/* <span className={`product-badge status-${data.inventoryStatus.toLowerCase()}`}>{data.inventoryStatus}</span> */}
-                    </div>
+                    {!viewOnly &&
+                        <div className="product-list-action">
+                            <span className="product-price">R${data.price}</span>
+                            <Button icon="pi pi-shopping-cart" className="p-button-secondary" label="Comprar" disabled={false} onClick={() => handleAddToCart(data)}></Button>
+                            {/* <span className={`product-badge status-${data.inventoryStatus.toLowerCase()}`}>{data.inventoryStatus}</span> */}
+                        </div>
+                    }
                 </div>
             </div>
         );
@@ -68,7 +71,7 @@ const DataViewComponent = ({ data, handleAddToCart }) => {
     const renderGridItem = (data) => {
         return (
             <div className="p-col-12 p-sm-6 p-md-4 p-lg-3 p-xl-2 item-container">
-                <ItemStyle1 data={data} handleAddToCart={handleAddToCart}/>
+                <ItemStyle1 data={data} handleAddToCart={handleAddToCart} viewOnly/>
             </div>
         );
     }
@@ -104,7 +107,7 @@ const DataViewComponent = ({ data, handleAddToCart }) => {
             <div className="product-item">
                 <div className="product-item-content">
                     <div className="p-mb-2">
-                        <img src={product.img} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={product.name} className="product-image" />
+                        <img src={product.img} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={product.name} className="product-image" />
                     </div>
                     <div>
                         <h4 className="p-mb-1">{product.title}</h4>

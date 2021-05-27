@@ -2,6 +2,8 @@ version: "3.9"
 services:
     webapp-client:
         container_name: webapp-client
+        environment:
+            - REACT_APP_STORAGE=http://localhost:9000
         build: ./webapp-client
         volumes: 
             - ./webapp-client:/app

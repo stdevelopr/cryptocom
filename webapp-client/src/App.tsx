@@ -3,6 +3,8 @@ import { useQuery } from "react-query"
 import Item from "./Item/Item"
 import Cart from "./Cart/Cart.js"
 import Header from "./Header/Header"
+// @ts-ignore
+import config from 'react-global-configuration';
 import Footer from "./Footer/Footer"
 import { Wrapper, StyledButton } from "./App.styles"
 import Drawer from "@material-ui/core/Drawer"
@@ -28,6 +30,12 @@ export type CartItemType = {
   amount: number;
 }
 
+config.set({
+  storage: process.env.REACT_APP_STORAGE
+});
+
+const viewOnly = true;
+
 const getProducts = async (): Promise<CartItemType[]> => {
   return await (await fetch('/api/products')).json()
 }
@@ -39,7 +47,7 @@ function App() {
 
   const getTotalItems = (items: CartItemType[]) => items.reduce((ack: number, item) => ack + item.amount, 0)
 
-  const handleAddToCart:any = (clickedItem: CartItemType) => {
+  const handleAddToCart: any = (clickedItem: CartItemType) => {
     setCartItems(prev => {
       const isItemInCart = prev.find(item => item.id == clickedItem.id)
       if (isItemInCart) {
@@ -69,17 +77,21 @@ function App() {
   if (error) return <div>Something went wrong...</div>
   return (
     <div className="App">
-      <Header/>
+      <Header />
       <Wrapper>
-        <Drawer anchor='right' open={cartOpen} onClose={() => setCartOpen(false)}>
-          <Cart cartItems={cartItems} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} />
-        </Drawer>
-        <StyledButton onClick={() => setCartOpen(true)}>
-          <Badge badgeContent={getTotalItems(cartItems)} color='error'>
-            <AddShoppingCartIcon />
-          </Badge>
-        </StyledButton>
-        <DataView data={data} handleAddToCart={handleAddToCart}/>
+        { !viewOnly &&
+        <div>
+          <Drawer anchor='right' open={cartOpen} onClose={() => setCartOpen(false)}>
+            <Cart cartItems={cartItems} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} />
+          </Drawer>
+          <StyledButton onClick={() => setCartOpen(true)}>
+            <Badge badgeContent={getTotalItems(cartItems)} color='error'>
+              <AddShoppingCartIcon />
+            </Badge>
+          </StyledButton>
+        </div>
+        }
+        <DataView data={data} handleAddToCart={handleAddToCart} viewOnly={viewOnly}/>
         {/* <Grid container spacing={3}>
           {data?.map(item => (
             <Grid item key={item.id} xs={12} sm={4}>
@@ -87,7 +99,7 @@ function App() {
             </Grid>
           ))}
         </Grid> */}
-        <Footer/>
+        <Footer />
       </Wrapper>
     </div>
   );
