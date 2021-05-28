@@ -9,6 +9,10 @@ export const Wrapper = styled.div`
     text-align: center;
 }
 
+.p-dataview-header {
+    background-color: white;
+}
+
 .dataview-demo .p-dropdown {
     width: 14rem;
     font-weight: normal;

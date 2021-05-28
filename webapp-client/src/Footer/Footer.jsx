@@ -1,4 +1,6 @@
 import { Wrapper } from "./Footer.styles"
+import { ImWhatsapp } from 'react-icons/im';
+import { IconContext } from "react-icons";
 
 function Footer() {
     return (
@@ -6,8 +8,11 @@ function Footer() {
             <div>
                 Informações da loja...
             </div>
+
             <div>
-                Contato: XXX-XXX
+                <IconContext.Provider value={{ color: "green"}}>
+                    <ImWhatsapp /><span>Whatsapp: XXX-XXX</span>
+                </IconContext.Provider>
             </div>
         </Wrapper>
     )

@@ -11,7 +11,7 @@ function Header() {
                 <div className="logo-img">
                 <ReactRoundedImage image={"generated.jpg"} imageHeight="150" imageWidth="150" roundedColor="darkgoldenrod" roundedSize="8" borderRadius="100"/>
                 </div>
-                <div className="title" style={{margin: '-5px'}}> L&A Comércio de Jóias </div>
+                <div className="title" style={{margin: '-5px'}}> Nívea Marques Acessórios </div>
             </div>
         </Wrapper>
     )
