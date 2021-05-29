@@ -2,20 +2,22 @@ import React from 'react'
 import { Admin, Resource, NumberField, NumberInput, EditGuesser, ImageInput, ReferenceInput, Labeled, FormDataConsumer, ImageField, SelectInput, List, Datagrid, Edit, Create, SimpleForm, DateField, TextField, EditButton, TextInput, DateInput } from 'react-admin';
 import restProvider from "ra-data-simple-rest"
 import axios from 'axios';
+import MyLayout from './MyLayout';
 import config from 'react-global-configuration';
+import { Route } from "react-router";
 
 export const ProductList = props => {
     return <List {...props}>
-    <Datagrid rowClick="edit">
-        <TextField source="id" />
-        <TextField source="title" />
-        <TextField source="description" />
-        <NumberField source="price" />
-        <ImageEnv source="title" title="Image" />
-    </Datagrid>
-</List>
+        <Datagrid rowClick="edit">
+            <TextField source="id" />
+            <TextField source="title" />
+            <TextField source="description" />
+            <NumberField source="price" />
+            <ImageEnv source="title" title="Image" />
+        </Datagrid>
+    </List>
 }
-;
+    ;
 
 const ImageEnv = props => {
     props.record['env'] = `${config.get('storage') || ''}${props.record.img}`
@@ -24,12 +26,12 @@ const ImageEnv = props => {
     )
 }
 function formatLogo(value) {
-    if (!value ||  typeof value === "string") { // Value is null or the url string from the backend, wrap it in an object so the form input can handle it 
-     return { url: `${config.get('storage') || ''}${value}` };
+    if (!value || typeof value === "string") { // Value is null or the url string from the backend, wrap it in an object so the form input can handle it 
+        return { url: `${config.get('storage') || ''}${value}` };
     } else {  // Else a new image is selected which results in a value object already having a preview link under the url key
-      return `${config.get('storage') || ''}${value}`;
+        return `${config.get('storage') || ''}${value}`;
     }
-  }
+}
 
 export const ProductEdit = props => (
     <Edit {...props}>
@@ -38,10 +40,10 @@ export const ProductEdit = props => (
             <TextInput source="title" />
             <TextInput source="description" />
             <NumberInput source="price" />
-            <ImageInput format={ formatLogo } source="img" label="Billede" accept="image/*" mulitple={false}>
+            <ImageInput format={formatLogo} source="img" label="Billede" accept="image/*" mulitple={false}>
                 <ImageField source="url" title="title" />
             </ImageInput>
-  
+
         </SimpleForm>
     </Edit>
 );
@@ -130,8 +132,12 @@ const convertFileToBase64 = file =>
     });
 
 
+    export const PageEdit = props => (
+       <div>Edit Page</div>
+    );
 export default function AdminPage() {
-    return <Admin dataProvider={myDataProvider}>
-        <Resource name='products' list={ProductList} edit={ProductEdit} create={ProductCreate}></Resource>
+    return <Admin disableTelemetry dataProvider={myDataProvider} layout={MyLayout} title="Admin Page" customRoutes={[<Route key="my-profile" path="/my-profile" component={PageEdit}/>]}
+    >
+        <Resource name='products' list={ProductList} edit={ProductEdit} create={ProductCreate} options={{ label: 'Products' }}></Resource>
     </Admin>
 }
