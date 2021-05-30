@@ -39,4 +39,13 @@ services:
             - BITNAMI_DEBUG=true
         ports:
             - "5432:5432"
+    jenkins:
+        image: jenkins/jenkins:lts-jdk11
+        ports:
+            - 8080:8080
+        volumes:
+            - jenkins_home:/var/jenkins_home
+
+volumes:
+    jenkins_home:
   
