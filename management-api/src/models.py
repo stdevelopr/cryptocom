@@ -25,3 +25,21 @@ class ProductSchema(Schema):
     description = fields.Str()
     price = fields.Number()
     img = fields.Str()
+
+
+class PageInfoModel(BaseModel):
+    __tablename__ = "page_info"
+    tenant_id = Column(INTEGER(), primary_key=True)
+    title = Column(String())
+    description = Column(String())
+    contact = Column(String())
+    
+    def to_dict(self):
+        return {"title": self.title, "description": self.description, "contact": self.contact}
+
+class PageInfoSchema(Schema):
+    id = fields.Str()
+    tenant_id = fields.Str()
+    title = fields.Str()
+    description = fields.Str()
+    contact = fields.Str()

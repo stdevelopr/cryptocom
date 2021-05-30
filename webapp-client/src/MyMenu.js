@@ -29,13 +29,13 @@ const Menu = ({ onMenuClick, logout }) => {
                     sidebarIsOpen={open}
                 />
             ))}
-            {/* <MenuItemLink
-                to="/custom-route"
-                primaryText="Miscellaneous"
+            <MenuItemLink
+                to="/page_info"
+                primaryText="page_info"
                 leftIcon={<LabelIcon />}
-                onClick={onMenuClick}
+                // onClick={onMenuClick}
                 sidebarIsOpen={open}
-            /> */}
+            />
             {isXSmall && logout}
         </div>
     );

@@ -1,10 +1,12 @@
-import React from 'react'
-import { Admin, Resource, NumberField, NumberInput, EditGuesser, ImageInput, ReferenceInput, Labeled, FormDataConsumer, ImageField, SelectInput, List, Datagrid, Edit, Create, SimpleForm, DateField, TextField, EditButton, TextInput, DateInput } from 'react-admin';
+import React, { useState, useEffect } from 'react'
+import { Admin, Resource, NumberField, NumberInput, EditGuesser, ImageInput, ReferenceInput, Labeled, FormDataConsumer, ImageField, SelectInput, List, Datagrid, Edit, Create, SimpleForm, DateField, TextField, EditButton, TextInput, DateInput, Show } from 'react-admin';
 import restProvider from "ra-data-simple-rest"
 import axios from 'axios';
 import MyLayout from './MyLayout';
 import config from 'react-global-configuration';
 import { Route } from "react-router";
+import { InputText } from 'primereact/inputtext';
+import { Button } from 'primereact/button';
 
 export const ProductList = props => {
     return <List {...props}>
@@ -132,12 +134,48 @@ const convertFileToBase64 = file =>
     });
 
 
-    export const PageEdit = props => (
-       <div>Edit Page</div>
-    );
+const PageList = (props) => {
+    const [info, setInfo] = useState('')
+    useEffect(()=>{
+        axios.get('/api/page_info/1').then(res => setInfo(res.data))
+    }, [])
+
+    const saveInfo = () => {
+        axios.put('/api/page_info/1', info).then(res => console.log("RES", res))
+    }
+
+    return (
+        <div>
+            <label> Título da Página</label>
+            <div>
+            <InputText value={info.title} onChange={(e) => setInfo({...info, title: e.target.value})} />
+            </div>
+            <br></br>
+            <label> Descrição </label>
+            <div>
+            <InputText value={info.description} onChange={(e) => setInfo({...info, description: e.target.value})} />
+            </div>
+            <br></br>
+            <label> Contato </label>
+            <div>
+            <InputText value={info.contatc} onChange={(e) => setInfo({...info, contact: e.target.value})} />
+            </div>
+            <div>
+                <Button onClick={() => saveInfo()}>Salvar</Button>
+            </div>
+        </div>
+
+    )
+}
+
+const PageEdit = () => {
+    return <div>OK</div>
+}
+
 export default function AdminPage() {
-    return <Admin disableTelemetry dataProvider={myDataProvider} layout={MyLayout} title="Admin Page" customRoutes={[<Route key="my-profile" path="/my-profile" component={PageEdit}/>]}
+    return <Admin disableTelemetry dataProvider={myDataProvider} layout={MyLayout} title="Admin Page" customRoutes={[<Route key="page_info" path="/page_info" component={PageList} />]}
     >
         <Resource name='products' list={ProductList} edit={ProductEdit} create={ProductCreate} options={{ label: 'Products' }}></Resource>
+        {/* <Resource name='page_info' show={PageList} edit={PageEdit} options={{ label: 'Page Info' }}></Resource> */}
     </Admin>
 }

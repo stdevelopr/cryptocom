@@ -2,6 +2,7 @@ from sanic import Sanic
 from sanic_restful_api import reqparse, abort, Api, Resource
 from sqlalchemy.ext.asyncio import create_async_engine
 from resources.products import Product, ProductsList
+from resources.page_info import PageInfo
 
 from contextvars import ContextVar 
 
@@ -30,6 +31,7 @@ async def close_session(request, response):
 
 api.add_resource(ProductsList, 'api/products')
 api.add_resource(Product, 'api/products/<product_id>')
+api.add_resource(PageInfo, 'api/page_info/<tenant_id>')
 
 
 if __name__ == '__main__':

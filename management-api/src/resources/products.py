@@ -47,9 +47,10 @@ class ProductsList(Resource):
             rs = await session.execute(query)
             schema = ProductSchema(many=True)
             result = schema.dump(rs)
+            size= len(result)
             return response.json(
             result,
-            headers={'Content-Range': 'products 0-24/319'},
+            headers={'Content-Range': f'products 0-{size}/{size}'},
             status=200)
 
     async def post(self, request):

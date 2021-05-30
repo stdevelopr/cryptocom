@@ -22,7 +22,6 @@ const MyAppBar = props => {
     const classes = useStyles();
     return (
         <AppBar {...props} userMenu={<MyUserMenu />}>
-            <div>LL</div>
             <Typography
                 variant="h6"
                 color="inherit"
