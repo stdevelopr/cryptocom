@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useQuery } from "react-query"
-import Item from "./Item/Item"
+// import Item from "./Item/Item"
 import Cart from "./Cart/Cart.js"
 import Header from "./Header/Header"
 // @ts-ignore
@@ -9,7 +9,7 @@ import Footer from "./Footer/Footer"
 import { Wrapper, StyledButton } from "./App.styles"
 import Drawer from "@material-ui/core/Drawer"
 import LinearProgress from "@material-ui/core/LinearProgress"
-import Grid from "@material-ui/core/Grid"
+// import Grid from "@material-ui/core/Grid"
 import AddShoppingCartIcon from "@material-ui/icons/ShoppingCart"
 import Badge from "@material-ui/core/Badge"
 import DataView from "./components/DataView/DataView"
@@ -77,6 +77,7 @@ function App() {
     ))
   }
 
+  document.getElementsByTagName('title')[0].innerHTML = info.title
   if (isLoading) return <LinearProgress />
   if (error) return <div>Something went wrong...</div>
   return (
@@ -100,7 +101,7 @@ function App() {
           {data?.map(item => (
             <Grid item key={item.id} xs={12} sm={4}>
               <Item item={item} handleAddToCart={handleAddToCart} />
-            </Grid>
+            </Grid>React Query first returns previously fetched data, and then it fetches it again.
           ))}
         </Grid> */}
         <Footer description={info.description} contact={info.contact}/>

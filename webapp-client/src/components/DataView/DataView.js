@@ -2,14 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
 import { Button } from 'primereact/button';
-import { Dropdown } from 'primereact/dropdown';
+// import { Dropdown } from 'primereact/dropdown';
 // import ProductService from '../service/ProductService';
-import { Rating } from 'primereact/rating';
+// import { Rating } from 'primereact/rating';
 import { Wrapper } from "./DataView.styles"
-import Item from "../../Item/Item"
+// import Item from "../../Item/Item"
 import { ItemStyle1 } from "./Layouts/Item/ItemStyle1/ItemStyle1"
 import config from 'react-global-configuration';
-import { Carousel } from 'primereact/carousel';
+// import { Carousel } from 'primereact/carousel';
 // import Button from "@material-ui/core/Button"
 
 
@@ -30,20 +30,20 @@ const DataViewComponent = ({ data, handleAddToCart, viewOnly }) => {
     //     productService.getProducts().then(data => setProducts(data));
     // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const onSortChange = (event) => {
-        const value = event.value;
+    // const onSortChange = (event) => {
+    //     const value = event.value;
 
-        if (value.indexOf('!') === 0) {
-            setSortOrder(-1);
-            setSortField(value.substring(1, value.length));
-            setSortKey(value);
-        }
-        else {
-            setSortOrder(1);
-            setSortField(value);
-            setSortKey(value);
-        }
-    }
+    //     if (value.indexOf('!') === 0) {
+    //         setSortOrder(-1);
+    //         setSortField(value.substring(1, value.length));
+    //         setSortKey(value);
+    //     }
+    //     else {
+    //         setSortOrder(1);
+    //         setSortField(value);
+    //         setSortKey(value);
+    //     }
+    // }
 
     const renderListItem = (data) => {
         return (
